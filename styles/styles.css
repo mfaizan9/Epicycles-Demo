@@ -1,0 +1,172 @@
+/* ==========================================================================
+ * Epicycles Demonstrator -- sim-specific styles ONLY.
+ * The KL-UNL foundation (kl-unl.css) supplies the palette, panels, controls
+ * and the 56rem responsive collapse. Nothing here edits or forks that look;
+ * it only layers layout + a custom slider skin on top.
+ * ========================================================================== */
+
+/* Larger, zoom-friendly body copy (rule 10: >=1.125rem floor, rem-based). */
+body {
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+/* ---- Two-column layout: diagram left (wide), controls right (narrow). ----
+   Overrides only the column template of THIS sim's .app-layout instance and
+   re-declares the foundation's 56rem collapse so single-column still works. */
+.sim-epicycles {
+  grid-template-columns: 1fr 24rem;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  align-items: stretch;
+}
+
+.sim-epicycles .app-layout__left,
+.sim-epicycles .app-layout__right {
+  min-width: 0;
+}
+
+.sim-epicycles .panel {
+  height: 100%;
+  border-radius: 6px;
+}
+
+.panel__heading {
+  font-size: 1.2rem;
+}
+
+/* ---- Diagram canvas: keep original coords, scale via CSS, preserve ratio. */
+.sim-canvas-wrap {
+  padding: 0.75rem 1rem 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+#stage {
+  width: 100%;
+  height: auto;
+  max-width: 620px;      /* never upscale past native stage size */
+  aspect-ratio: 1 / 1;
+  display: block;
+  background: #ffffff;
+  border: 1px solid var(--border-color, #767676);
+  border-radius: 4px;
+  touch-action: manipulation;
+}
+
+/* ---- Description text ---- */
+.sim-description {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  margin: 0.75rem 1rem 0.25rem;
+}
+.sim-description p { margin: 0 0 0.75rem; }
+
+/* ---- "keep the [select] fixed" row ---- */
+.sim-center-row {
+  grid-template-columns: auto auto auto;
+  justify-content: start;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.sim-select {
+  font-size: 1.05rem;
+  min-height: 2.75rem;         /* >=44px touch target */
+  padding: 0.25rem 0.5rem;
+  color: var(--foreground-color, #1a1a1a);
+  background: var(--background-color, #ffffff);
+  border: var(--border-width, 1px) var(--border-style, solid)
+          var(--border-color, #767676);
+  border-radius: 4px;
+}
+
+.sim-fixed-word { font-size: 1.05rem; }
+
+/* ---- Speed slider row: slow [====o====] fast ---- */
+.sim-speed-row {
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.sim-endcap {
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+/* Custom accessible slider skin (separate component; native <input type=range>
+   keeps ALL keyboard behavior -- arrows/Page/Home/End -- for free). */
+.sim-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 0.5rem;
+  margin: 0.9rem 0;
+  border-radius: 0.25rem;
+  background: #c9c9c9;
+  cursor: pointer;
+}
+.sim-slider:focus { outline: none; }
+.sim-slider:focus-visible {
+  outline: 0.125rem solid var(--outline-color, #005fcc);
+  outline-offset: 0.35rem;
+}
+/* WebKit thumb */
+.sim-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--button-background-color, #005a9c);
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 1px var(--border-color, #767676);
+}
+/* Firefox thumb + track */
+.sim-slider::-moz-range-thumb {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--button-background-color, #005a9c);
+  border: 2px solid #ffffff;
+}
+.sim-slider::-moz-range-track {
+  height: 0.5rem;
+  border-radius: 0.25rem;
+  background: #c9c9c9;
+}
+
+/* ---- Pause/Play button row ---- */
+.sim-button-row {
+  justify-content: center;
+  margin-top: 0.25rem;
+}
+.sim-pause {
+  color: var(--button-foreground-color, #ffffff);
+  background: var(--button-background-color, #005a9c);
+  border: var(--border-width, 1px) var(--border-style, solid)
+          var(--border-color, #767676);
+  border-radius: 4px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  min-width: 8rem;
+}
+
+/* ============ Sim-specific responsive collapse to phone portrait ============
+   Re-assert the foundation's single-column behavior for this overridden grid,
+   and stack the control rows cleanly. */
+@media (max-width: 56rem) {
+  .sim-epicycles {
+    grid-template-columns: 1fr;
+  }
+  .sim-epicycles .panel { height: auto; }
+  #stage { max-width: 100%; margin: 0 auto; }
+}
+
+@media (max-width: 30rem) {
+  body { font-size: 1.0625rem; }
+  .sim-center-row { grid-template-columns: 1fr; justify-items: start; }
+  .sim-fixed-word { display: none; }   /* "fixed" trailing word not needed when stacked */
+}

@@ -1,0 +1,103 @@
+<!-- Epicycles Demonstrator (Path Tracing Demo) -- HTML5 / KL-UNL accessible port -->
+<!-- Converted from the decompiled Flash sim pathTracer005.swf. Behavior is a -->
+<!-- faithful port of the ActionScript; chrome/layout follow the KL-UNL foundation. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Epicycles Demonstrator</title>
+
+  <!-- Shared KL-UNL foundation (copied UNCHANGED into ./foundation/) -->
+  <link rel="stylesheet" href="foundation/kl-unl.css" media="all">
+  <!-- Sim-specific styles only; never overrides the foundation look -->
+  <link rel="stylesheet" href="styles/styles.css" media="all">
+
+  <!-- Custom masthead element (renders the H1 title + Reset/Help/About) -->
+  <script src="foundation/kl-unl-masthead.js" defer></script>
+  <!-- Foundation equation/screen-reader helper -->
+  <script src="foundation/kl-unl.js" defer></script>
+  <!-- Sim logic -->
+  <script src="simulation.js" defer></script>
+</head>
+<body>
+  <a class="sr-only sr-only-focusable" href="#main">Skip to simulation</a>
+
+  <div class="app-shell">
+
+    <!-- Title bar + Reset / Help / About + dialogs (reads foundation/contents.json) -->
+    <kl-unl-masthead sim-id="pathtracer" json-url="foundation/contents.json"></kl-unl-masthead>
+
+    <!-- Diagram (left, wide) + controls (right, narrow); collapses to one column
+         at the foundation's 56rem breakpoint. -->
+    <div class="app-layout sim-epicycles">
+
+      <!-- ============ DIAGRAM PANEL ============ -->
+      <main id="main" class="app-layout__left">
+        <section class="panel" aria-labelledby="diagram-heading">
+          <h2 id="diagram-heading" class="panel__heading">Orbits and Traced Paths</h2>
+          <div class="panel__canvas-wrap sim-canvas-wrap">
+            <!-- Original Flash stage geometry is preserved internally; CSS scales it. -->
+            <canvas id="stage" width="620" height="620"
+                    role="img"
+                    aria-describedby="stage-desc">
+            </canvas>
+          </div>
+          <!-- Live text alternative for the canvas (audio-only users). -->
+          <p id="stage-desc" class="sr-only" aria-live="off"></p>
+        </section>
+      </main>
+
+      <!-- ============ CONTROLS / DESCRIPTION PANEL ============ -->
+      <aside class="app-layout__right">
+        <section class="panel sim-controls" aria-labelledby="controls-heading">
+          <h2 id="controls-heading" class="panel__heading">Description &amp; Controls</h2>
+
+          <!-- Verbatim instructional text from the original sim (texts/185.txt). -->
+          <div class="panel__help sim-description">
+            <p>In this animation the blue and red objects revolve around the yellow
+              object in circlular orbits, shown in black. The red tracks are the paths
+              that result when the system moves to make the selected object appear
+              stationary.</p>
+            <p>This demonstrates that for simple circular orbits the heliocentric and
+              geocentric models are equivalent, at least for predictive purposes.</p>
+          </div>
+
+          <!-- "keep the [object] fixed" -->
+          <fieldset class="control-fieldset">
+            <legend class="control-fieldset__legend">Reference frame</legend>
+            <div class="control-row sim-center-row">
+              <label class="control-row__label" for="centerSelect">keep the</label>
+              <select id="centerSelect" class="sim-select">
+                <option value="yellow" selected>yellow object</option>
+                <option value="blue">blue object</option>
+                <option value="red">red object</option>
+              </select>
+              <span class="sim-fixed-word" aria-hidden="true">fixed</span>
+            </div>
+          </fieldset>
+
+          <!-- animation speed slider (slow .. fast) + Pause/Play -->
+          <fieldset class="control-fieldset">
+            <legend class="control-fieldset__legend">animation speed:</legend>
+            <div class="control-row sim-speed-row">
+              <span class="sim-endcap sim-endcap--slow" aria-hidden="true">slow</span>
+              <input type="range" id="speedSlider" class="control-row__slider sim-slider"
+                     min="0" max="100" step="1" value="25"
+                     aria-label="Animation speed"
+                     aria-valuetext="Animation speed 25 percent">
+              <span class="sim-endcap sim-endcap--fast" aria-hidden="true">fast</span>
+            </div>
+            <div class="button-row sim-button-row">
+              <button type="button" id="pauseBtn" class="button sim-pause">Pause</button>
+            </div>
+          </fieldset>
+        </section>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Polite live region for state-change announcements (units always spoken). -->
+  <p id="live-status" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+</body>
+</html>

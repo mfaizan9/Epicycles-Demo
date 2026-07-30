@@ -1,0 +1,21 @@
+In this animation the blue and red 
+--- RECORDSEPARATOR ---
+objects revolve around the yellow 
+--- RECORDSEPARATOR ---
+object in circlular orbits, shown in 
+--- RECORDSEPARATOR ---
+black. The red tracks are the paths 
+--- RECORDSEPARATOR ---
+that result when the system moves 
+--- RECORDSEPARATOR ---
+to make the selected object appear 
+--- RECORDSEPARATOR ---
+stationary. 
+--- RECORDSEPARATOR ---
+This demonstrates that for simple 
+--- RECORDSEPARATOR ---
+circular orbits the heliocentric and 
+--- RECORDSEPARATOR ---
+geocentric models are equivalent, 
+--- RECORDSEPARATOR ---
+at least for predictive purposes.
